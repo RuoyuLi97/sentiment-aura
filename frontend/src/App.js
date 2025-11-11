@@ -43,8 +43,6 @@ function App() {
 
   // Transcript handler
   const handleTranscript = async(data) => {
-    console.log('Transcript: ', data.text, 'Final: ', data.isFinal);
-
     if (!data.isFinal) {
       setCurrentLine(data.text);
     } else{
@@ -63,16 +61,12 @@ function App() {
         setError(null);
 
         try {
-          console.log('Analyzing sentiment...');
-
           const response = await axios.post(
             'http://localhost:8000/process_text',
             {text: data.text},
             {timeout: 10000}
           );
 
-          console.log('Sentiment: ', response.data);
-          
           // Update sentiment state
           setSentiment({
             score: response.data.sentiment_score,
@@ -90,9 +84,9 @@ function App() {
           } else if (error.response) {
             setError(`Backend error: ${error.response.status}`);
           } else if (error.request) {
-            setError('Cannot reach backend - check if server is running on port 8000!');
+            setError('Cannot reach backend - check if server is running on port 8000.');
           } else {
-            setError('Failed to analyze sentiment!');
+            setError('Failed to analyze sentiment.');
           }
         } finally {
           setIsProcessing(false);
@@ -103,9 +97,7 @@ function App() {
 
   // Record Workflow
   const handleStart = async() => {
-    console.log('Starting recording...');
-
-    // Reset state
+   // Reset state
     setError(null);
     setTranscript([]);
     setCurrentLine('');
@@ -120,7 +112,6 @@ function App() {
       handleTranscript,
       (errorMsg) => {
         console.error('Deepgram error: ', errorMsg);
-        console.log('Deepgram error callback received:', errorMsg);
         setError(errorMsg);
       }
     );
@@ -132,17 +123,14 @@ function App() {
     const result = await audioCaptureRef.current.start((audioData) => {
       if (deepgramRef.current) {
         deepgramRef.current.send(audioData);
-      } else {
-        console.log('No deepgramRef!');
       }
     });
 
     // Handle success/fail
     if (result.success) {
       setIsRecording(true);
-      console.log('Recording started!');
     } else {
-      setError('Failed to access microphone!');
+      setError('Failed to access microphone.');
       setError(result.error);
 
       if (deepgramRef.current) {
@@ -159,8 +147,6 @@ function App() {
 
   // Stop record
   const handleStop = () => {
-    console.log('Stopping recording...');
-
     if (audioCaptureRef.current) {
       audioCaptureRef.current.stop();
       audioCaptureRef.current = null;
@@ -173,7 +159,6 @@ function App() {
 
     setIsRecording(false);
     setCurrentLine('');
-    console.log('Recording stopped!');
   };
 
   return (

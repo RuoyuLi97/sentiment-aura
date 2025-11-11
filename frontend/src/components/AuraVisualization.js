@@ -49,7 +49,7 @@ function AuraVisualization({sentiment}) {
                     0.08
                 );
                 
-                p.fill(0, 3);
+                p.fill(0, 2);
                 p.noStroke();
                 p.rect(0, 0, p.width, p.height);
 
@@ -60,52 +60,58 @@ function AuraVisualization({sentiment}) {
 
                 const timeScale = p.map(
                     currentSentiment.intensity, 
-                    0, 1, 0.0002, 0.002);
+                    0, 1, 0.0005, 0.002);
 
                 const particleSpeed = p.map(
                     Math.abs(currentSentiment.score), 
-                    -1, 1, 0.3, 3.5);
+                    0, 1, 0.8, 6);
+
+                const accelerationScale = p.map(
+                    Math.abs(currentSentiment.score), 
+                    0, 1, 0.5, 1.2);
 
                 // Color based on sentiment score
                 let hue, saturation;
                 if (currentSentiment.score < -0.3) {
-                    hue = p.map(currentSentiment.score, -1, -0.3, 240, 280);
+                    hue = p.map(currentSentiment.score, -1, -0.3, 260, 220);
                     saturation = 85;
                 } else if (currentSentiment.score < -0.1) {
-                    hue = p.map(currentSentiment.score, -0.3, -0.1, 280, 220);
+                    hue = p.map(currentSentiment.score, -0.3, -0.1, 220, 200);
                     saturation = 75;               
+                } else if (currentSentiment.score < 0) {
+                    hue = p.map(currentSentiment.score, -0.1, 0, 200, 175);
+                    saturation = 60;
                 } else if (currentSentiment.score < 0.1) {
-                    hue = p.map(currentSentiment.score, -0.1, 0.1, 180, 120);
+                    hue = p.map(currentSentiment.score, 0, 0.1, 285, 300);
                     saturation = 60;
                 } else if (currentSentiment.score < 0.3) {
-                    hue = p.map(currentSentiment.score, 0.1, 0.3, 120, 60);
+                    hue = p.map(currentSentiment.score, 0.1, 0.3, 300, 320);
                     saturation = 75;
                 } else {
-                    hue = p.map(currentSentiment.score, 0.3, 1, 60, 10);
+                    hue = p.map(currentSentiment.score, 0.3, 1, 320, 360);
                     saturation = 95;
                 }
 
                 // Update and draw each particle
-                particles.forEach(particle => {
+                particles.forEach((particle, idx) => {
                     particle.prevPos.set(particle.pos);
-                    
-                    const noiseValue = p.noise(
-                        particle.pos.x * noiseScale,
-                        particle.pos.y * noiseScale,
-                        p.frameCount * timeScale
-                    );
 
-                    const angle = noiseValue * p.TWO_PI * 4;
+                    // Single perline noise for angle
+                    const nx = particle.pos.x * noiseScale;
+                    const ny = particle.pos.y * noiseScale;
+                    const nt = p.frameCount * timeScale;
+                    const angle = p.noise(nx, ny, nt) * p.TWO_PI * 4;
 
                     particle.acc.set(p.cos(angle), p.sin(angle));
-                    particle.acc.mult(0.4);
-                    particle.vel.add(particle.acc);
+                    particle.acc.mult(accelerationScale);
+                    particle.acc.add(p5.Vector.random2D().mult(0.1));
+                    particle.vel.lerp(particle.acc, 0.2);
                     particle.vel.limit(particleSpeed);
                     particle.pos.add(particle.vel);
                     
+                    // Edges
                     let wrapped = false;
 
-                    // Edges
                     if (particle.pos.x < 0) {
                         particle.pos.x = p.width;
                         particle.prevPos.x = p.width;
@@ -127,7 +133,7 @@ function AuraVisualization({sentiment}) {
                         wrapped = true;
                     }
 
-                    if (wrapped) return;
+                    if (wrapped) particle.prevPos.set(particle.pos);
 
                     // Draw particle trail
                     const alpha = p.map(
