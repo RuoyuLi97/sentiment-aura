@@ -1,71 +1,71 @@
 .keywords-display-wrapper {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    min-height: 40px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  min-height: 40px;
 }
 
 .keyword-tag {
-    background: rgba(102, 126, 234, 0.2);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(102, 126, 234, 0.4);
-    
-    color: #a5b4fc;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
+  background: rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(102, 126, 234, 0.4);
+
+  color: #a5b4fc;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }
 
 /* Fade-in animation */
 .keyword-fade-in {
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeInUp 0.5s ease-out forwards;
 }
 
 /* Fade-out animation */
 .keyword-fade-out {
-    opacity: 1;
-    animation: fadeOut 0.3s ease-out forwards;
+  opacity: 1;
+  animation: fadeOut 0.3s ease-out forwards;
 }
 
 /* Fade-in keyframes */
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Fade-out keyframes */
 @keyframes fadeOut {
-    from {
-        opacity: 1;
-        transform: scale(1);
-    }
-    to {
-        opacity: 0;
-        transform: scale(0.9);
-    }
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
 }
 
 /* Subtle hover effect */
 .keyword-tag:hover {
-    background: rgba(102, 126, 234, 0.3);
-    transform: translateY(-2px);
+  background: rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
 }
 
 .placeholder {
-    color: #6b7280;
-    font-style: italic;
-    font-size: 14px;
+  color: #6b7280;
+  font-style: italic;
+  font-size: 14px;
 }
