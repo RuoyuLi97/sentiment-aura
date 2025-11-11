@@ -15,11 +15,15 @@ body {
 .App {
   min-height: 100vh;
   padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
 }
 
 .container {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 h1 {
@@ -43,17 +47,6 @@ h2 {
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid #ef4444;
   color: #ef4444;
-  padding: 12px 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Processing Indicator */
-.processing-indicator {
-  background: rgba(59, 130, 246, 0.1);
-  border: 1px solid #3b82f6;
-  color: #3b82f6;
   padding: 12px 20px;
   border-radius: 8px;
   margin-bottom: 20px;
@@ -202,7 +195,7 @@ h2 {
 }
 
 /* Keywords */
-.keywords-container {
+/* .keywords-container {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
@@ -216,7 +209,7 @@ h2 {
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
-}
+} */
 
 /* Scrollbar */
 .transcript-container::-webkit-scrollbar {

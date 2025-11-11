@@ -1,5 +1,7 @@
 import React, {useState, useRef} from 'react';
 import './App.css';
+import AuraVisualization from './components/AuraVisualization';
+import KeywordsDisplay from './components/KeywordsDisplay';
 import {AudioCapture} from './utils/audioCapture';
 import {DeepgramService} from './utils/deepgramService';
 import axios from 'axios';
@@ -160,8 +162,13 @@ function App() {
 
   return (
     <div className='App'>
-      <div className='container'>
+      {/* Perlin Noise Background */}
+      <AuraVisualization sentiment={sentiment} />
+      
+      {/* UI Overlay */}
+      <div className="container">
         <h1>Sentiment Aura</h1>
+        
         {/* Error display */}
         {error && (
           <div className='error-message'>
@@ -171,9 +178,13 @@ function App() {
 
         {/* Processing indicator */}
         {isProcessing && (
-          <div className='processing-indicator'>
-            Analyzing sentiment...
-          </div>
+          <span style={{
+            fontSize: '0.9rem',
+            color: '#888',
+            fontStyle: 'italic'
+          }}>
+            Analyzing...
+          </span>
         )}
 
         {/* Controls */}
@@ -235,19 +246,9 @@ function App() {
         </div>
 
         {/* Keywords display */}
-        <div className='keywords-section'>
+        <div className="keywords-section">
           <h2>Keywords</h2>
-          <div className='keywords-container'>
-            {keywords.length > 0 ? (
-              keywords.map((keyword, idx) => (
-                <span key={idx} className='keyword-tag'>
-                  {keyword}
-                </span>
-              ))
-            ) : (
-              <p className='placeholder'>Keywords will appear here...</p>
-            )}
-          </div>
+          <KeywordsDisplay keywords={keywords} />
         </div>
       </div>
     </div>
