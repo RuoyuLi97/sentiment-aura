@@ -21,7 +21,7 @@ function AuraVisualization({sentiment}) {
                 p.background(0, 0);
                 p.colorMode(p.HSB, 360, 100, 100, 100);
 
-                for (let i = 0; i < 20000; i++) {
+                for (let i = 0; i < 10000; i++) {
                     const x = p.random(p.width);
                     const y = p.random(p.height);
                     particles.push({
