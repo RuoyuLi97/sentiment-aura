@@ -63,12 +63,12 @@ function AuraVisualization({sentiment}) {
                     0, 1, 0.0005, 0.002);
 
                 const particleSpeed = p.map(
-                    Math.abs(currentSentiment.score), 
-                    0, 1, 0.8, 6);
+                    currentSentiment.intensity, 
+                    0, 1, 0.5, 8);
 
                 const accelerationScale = p.map(
-                    Math.abs(currentSentiment.score), 
-                    0, 1, 0.5, 1.2);
+                    currentSentiment.intensity, 
+                    0, 1, 0.3, 2.0);
 
                 // Color based on sentiment score
                 let hue, saturation;
