@@ -109,20 +109,27 @@ function App() {
     setError(null);
     setTranscript([]);
     setCurrentLine('');
+    setKeywords([]);
 
     // Initialize service
     audioCaptureRef.current = new AudioCapture();
     deepgramRef.current = new DeepgramService();
 
-    // Connect to deepgram websocket
-    deepgramRef.current.connect(handleTranscript);
+    // Connect to deepgram websocket with error handling
+    deepgramRef.current.connect(
+      handleTranscript,
+      (errorMsg) => {
+        console.error('Deepgram error: ', errorMsg);
+        console.log('Deepgram error callback received:', errorMsg);
+        setError(errorMsg);
+      }
+    );
 
     // Wait for websocket to connect
     await new Promise(resolve => setTimeout(resolve, 500));
 
     // Start microphone capture
-    const success = await audioCaptureRef.current.start((audioData) => {
-      console.log('App received audio:', audioData.length, 'bytes!');
+    const result = await audioCaptureRef.current.start((audioData) => {
       if (deepgramRef.current) {
         deepgramRef.current.send(audioData);
       } else {
@@ -131,13 +138,21 @@ function App() {
     });
 
     // Handle success/fail
-    if (success) {
+    if (result.success) {
       setIsRecording(true);
       console.log('Recording started!');
     } else {
       setError('Failed to access microphone!');
+      setError(result.error);
+
       if (deepgramRef.current) {
         deepgramRef.current.disconnect();
+        deepgramRef.current = null;
+      }
+
+      if (audioCaptureRef.current) {
+        audioCaptureRef.current.stop();
+        audioCaptureRef.current = null;
       }
     }
   };
