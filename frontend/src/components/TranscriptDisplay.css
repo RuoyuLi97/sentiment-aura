@@ -1,0 +1,108 @@
+/* Transcript section container */
+.transcript-display {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.transcript-display:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Section title */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #e0e0e0;
+  letter-spacing: 0.5px;
+}
+
+/* Scrollable container */
+.transcript-scroll-container {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 20px;
+  height: 100px;
+  overflow-y: auto;
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+/* Inner content wrapper */
+.transcript-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Individual transcript lines */
+.transcript-line {
+  margin: 0;
+  line-height: 1.7;
+  color: #e8e8e8;
+  font-size: 15px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border-left: 3px solid rgba(102, 126, 234, 0.5);
+}
+
+/* Fade-in animation for new lines */
+.transcript-line.fade-in {
+  opacity: 0;
+  animation: fadeInLine 0.4s ease-out forwards;
+}
+
+@keyframes fadeInLine {
+from {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+to {
+  opacity: 1;
+  transform: translateX(0);
+}
+}
+
+/* Interim line (while speaking) */
+.transcript-line.interim {
+  color: #9ca3af;
+  font-style: italic;
+  border-left-color: rgba(156, 163, 175, 0.5);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Empty state placeholder */
+.transcript-placeholder {
+  color: #6b7280;
+  font-style: italic;
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Custom scrollbar */
+.transcript-scroll-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.transcript-scroll-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+.transcript-scroll-container::-webkit-scrollbar-thumb {
+  background: rgba(102, 126, 234, 0.4);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.transcript-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(102, 126, 234, 0.6);
+}

@@ -2,6 +2,7 @@ import React, {useState, useRef} from 'react';
 import './App.css';
 import AuraVisualization from './components/AuraVisualization';
 import KeywordsDisplay from './components/KeywordsDisplay';
+import TranscriptDisplay from './components/TranscriptDisplay';
 import {AudioCapture} from './utils/audioCapture';
 import {DeepgramService} from './utils/deepgramService';
 import axios from 'axios';
@@ -178,13 +179,9 @@ function App() {
 
         {/* Processing indicator */}
         {isProcessing && (
-          <span style={{
-            fontSize: '0.9rem',
-            color: '#888',
-            fontStyle: 'italic'
-          }}>
-            Analyzing...
-          </span>
+          <div className="processing-indicator">
+            Analyzing sentiment...
+          </div>
         )}
 
         {/* Controls */}
@@ -207,24 +204,10 @@ function App() {
         </div>
 
         {/* Transcript display */}
-        <div className='transcript-section'>
-          <h2>Transcript</h2>
-          <div className='transcript-container'>
-            {transcript.map((entry, idx) => (
-              <p key={idx} className='transcript-line'>
-                {entry.text}
-              </p>
-            ))}
-            {currentLine && (
-              <p className='transcript-line current'>
-                {currentLine}
-              </p>
-            )}
-            {transcript.length === 0 && !currentLine && (
-              <p className='placeholder'>Your speech will appear here...</p>
-            )}
-          </div>
-        </div>
+        <TranscriptDisplay
+          transcript={transcript}
+          currentLine={currentLine}
+        />
 
         {/* Sentiment display */}
         <div className='sentiment-section'>
